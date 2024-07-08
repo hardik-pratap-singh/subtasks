@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle SVG Injection</title>
+</head>
+<body>
+    <div>
+        <label for="toggleCrazy">Exclude "Crazy"</label>
+        <input type="checkbox" id="toggleCrazy">
+    </div>
+
+
+    <div>
+        <p>
+            Lorem ipsum dolor sit amet consectetur crazy adipisicing elit. Quaerat alias iste quo exercitationem stupid
+            nesciunt ea?
+        </p>
+
+        <p>
+            Lorem ipsum, mad dolor sit amet stupid jihadi adipisicing elit. Magni crazy minima adipisci architecto.
+        </p>
+    </div>
+
+
+    <script>
+        const iconSrc = './info.svg';
+        const iconAlt = 'Icon description';
+        const targetWords = ['crazy', 'stupid', 'mad'];
+        let excludeCrazy = false;
+
+        // Toggle button for excluding "crazy"
+        const toggleCrazyInput = document.getElementById('toggleCrazy');
+        toggleCrazyInput.addEventListener('change', (event) => {
+            excludeCrazy = event.target.checked;
+            updateIcons();
+        });
+
+        function updateIcons() {
+            const currentTargetWords = excludeCrazy ? targetWords.filter(word => word !== 'crazy') : targetWords;
+
+            // Remove existing icons
+            removeIcons();
+
+            // Add icons to target words
+            document.querySelectorAll('*').forEach(element => {
+                currentTargetWords.forEach(targetWord => {
+                    if (element.innerHTML.includes(targetWord)) {
+                        const className = `icon-container-${targetWord}`;
+                        // Split the innerHTML into parts to handle replacements
+                        const parts = element.innerHTML.split(targetWord);
+                        const replacedHTML = parts.join(`${targetWord}<span class="${className}"></span>`);
+
+                        // Update the element with the replaced content
+                        element.innerHTML = replacedHTML;
+
+                        // Add icon after each occurrence of the target word
+                        const iconContainers = element.querySelectorAll(`.${className}`);
+                        iconContainers.forEach(container => {
+                            const icon = document.createElement('img');
+                            icon.src = iconSrc;
+                            icon.alt = iconAlt;
+                            container.appendChild(icon);
+                        });
+                    }
+                });
+            });
+        }
+
+        function removeIcons() {
+            targetWords.forEach(targetWord => {
+                document.querySelectorAll(`.icon-container-${targetWord}`).forEach(container => {
+                    container.remove();
+                });
+            });
+        }
+
+        // Initial update to inject icons
+        updateIcons();
+    </script>
+</body>
+</html>
