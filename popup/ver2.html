@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <p>
+            Lorem ipsum dolor sit amet consectetur crazy adipisicing elit. Quaerat alias iste quo exercitationem stupid
+            nesciunt ea?
+        </p>
+
+        <p>
+            Lorem ipsum, dolor sit amet stupid jihadi adipisicing elit. Magni minima adipisci architecto.
+        </p>
+    </div>
+
+    <div class="class">
+        <img src="" alt="">
+        <div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa possimus quisquam temporibus
+                reprehenderit nesciunt dignissimos sunt ipsum, nostrum modi? Iusto libero sed alias!
+            </p>
+
+            <h3>
+                Lorem ipsum dolor sit.
+            </h3>
+        </div>
+    </div>
+
+    <p>
+        Lorem ipsum dolor crazy stupid sit stupid amet consectetur adipisicing elit. Aut architecto illum dolorum
+        jihadi.
+    </p>
+
+    <div>
+        <button>Crazy</button>
+        <button>Wow</button>
+    </div>
+    <script>
+        const iconSrc = '../info.svg';
+        const iconAlt = 'Icon description'; // Optional: provide alt text for accessibility
+        // const targetWords = ['crazy', 'stupid']; // Replace with your list of target words
+        // const targetWords = ['stupid']; // Replace with your list of target words
+        const targetWords = ['stupid' , 'crazy']; // Replace with your list of target words
+
+        // Function to add icons and hover behavior for each target word
+        function addIconsAndHoverBehavior(element, targetWord) {
+            const className = `icon-container-${targetWord}`;
+            const regex = new RegExp(`\\b${targetWord}\\b`, 'gi');
+
+            // Replace all occurrences of target word with icon and span container
+            element.innerHTML = element.innerHTML.replace(regex, `${targetWord}<span class="${className}"></span>`);
+
+            // Add icons after each occurrence of the target word
+            const iconContainers = element.querySelectorAll(`.${className}`);
+            console.log(iconContainers) ; 
+            // iconContainers.forEach(container => {
+            //     console.log(container); 
+            // })
+            iconContainers.forEach(container => {
+                const icon = document.createElement('img');
+                icon.src = iconSrc;
+                icon.alt = iconAlt;
+                container.appendChild(icon);
+
+                // Hovering feature: Popup with content
+                icon.addEventListener('mouseover', () => {
+                    const popup = document.createElement('div');
+                    popup.className = 'popup-content';
+                    popup.textContent = "wow";
+                    // Position the popup next to the icon (adjust as needed)
+                    popup.style.position = 'absolute';
+                    popup.style.left = `${icon.offsetLeft + icon.offsetWidth}px`;
+                    popup.style.top = `${icon.offsetTop}px`;
+                    // Append popup to the document body or relevant container
+                    // document.body.appendChild(popup);
+                    container.appendChild(popup)
+
+                    // Remove popup when mouseout
+                    icon.addEventListener('mouseout', () => {
+                        popup.remove();
+                    });
+                });
+            });
+        }
+
+        // Find all elements that contain any of the target words
+        document.querySelectorAll('*').forEach(element => {
+            targetWords.forEach(targetWord => {
+                // Use a regular expression to match all occurrences of the target word
+                const regex = new RegExp(`\\b${targetWord}\\b`, 'gi');
+                if (regex.test(element.innerHTML)) {
+                    addIconsAndHoverBehavior(element, targetWord);
+                }
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>

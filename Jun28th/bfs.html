@@ -1,0 +1,114 @@
+<!-- Popup showing only for last slur word in the slurList  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>crazy</p>
+    <div>
+        <p>
+            Lorem ipsum dolor sit amet consectetur crazy adipisicing elit. Quaerat alias iste quo exercitationem stupid
+            nesciunt ea?
+        </p>
+
+        <p>
+            Lorem ipsum, dolor sit amet stupid jihadi adipisicing elit. Magni minima adipisci architecto.
+        </p>
+    </div>
+
+    <div class="class">
+        <img src="" alt="">
+        <div>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa possimus quisquam temporibus
+                reprehenderit nesciunt dignissimos sunt ipsum, nostrum modi? Iusto libero sed alias!
+            </p>
+
+            <h3>
+                Lorem ipsum dolor sit.
+            </h3>
+        </div>
+    </div>
+
+    <p>
+        Lorem ipsum dolor crazy stupid sit stupid amet consectetur adipisicing elit. Aut architecto illum dolorum
+        mad.
+    </p>
+
+    <div>
+        <button>Crazy mad</button>
+        <button>Wow</button>
+    </div>
+
+
+    <script>
+        let textNodes = [] ; 
+        let body = document.querySelector("body") ;
+        console.log(body.childNodes) ; 
+
+        getAllTextNodes(body) ; 
+
+
+        function getAllTextNodes(node){
+            if(node.nodeType === 3){
+                textNodes.push({node : node , parent : node.parentNode}) ;
+                return ; 
+            }
+
+            let children = Array.from(node.childNodes) ; 
+            for(let i = 0 ; i < children.length ; i++){
+                getAllTextNodes(children[i]) ;
+            }
+        }
+
+        console.log(textNodes) ; 
+
+        const iconSrc = '../info.svg';
+        const iconAlt = 'Icon description';
+        const targetWords = ['crazy', 'stupid', 'mad']; 
+        let ct = 0 ; 
+        document.querySelectorAll('*').forEach(element => {
+            // let element = obj.parent ; 
+            // console.log(element)
+            targetWords.forEach(targetWord => {
+                
+                // ct++ ; 
+                if (element.innerHTML.includes(targetWord)) {
+                    const className = `icon-container-${targetWord}`;
+                    // Split the innerHTML into parts to handle replacements
+                    const parts = element.innerHTML.split(targetWord);
+                    const replacedHTML = parts.join(`${targetWord}<span class="${className}"></span>`);
+
+                    // Update the element with the replaced content
+                    element.innerHTML = replacedHTML;
+                    // console.log(replacedHTML)
+
+                    // Add icon after each occurrence of the target word
+                    const iconContainers = element.querySelectorAll(`.${className}`);
+
+                    // console.log(iconContainers);
+                    iconContainers.forEach(container => {
+                        // console.log(container) ; 
+                        const icon = document.createElement('img');
+                        icon.src = iconSrc;
+                        icon.alt = iconAlt;
+                        container.appendChild(icon);
+
+                        // console.log(icon)
+                    });
+                }
+            });
+        });
+
+        // console.log(ct)
+    </script>
+</body>
+
+</html>

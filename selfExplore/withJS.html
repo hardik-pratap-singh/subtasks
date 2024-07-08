@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <p>
+            Lorem ipsum dolor sit crazy amet consectetur adipisicing elit. Sunt, in? jihadi
+        </p>
+
+        <p>
+            Lorem ipsum dolor sit. stupid.
+        </p>
+    </div>
+
+    <p>
+        crazy Lorem ipsum dolor jihadi sit amet consectetur adipisicing elit. Mollitia voluptate ea dolore.
+        crazy stupid
+    </p>
+
+    <h1>
+        stupid
+    </h1>
+
+    <script>
+        let iconSrc = '../icon.png';
+        let iconAlt = 'Icon';
+
+        let root = document.querySelector("body");
+        // console.log(root); 
+        let rootChild = Array.from(root.children)
+        // console.log(rootChild)
+        // let n = rootChild.length ; 
+        // for(let i = 0 ; i < n ; i++){
+        //     console.log(rootChild[i])
+        // }
+        function traverse(root) {
+            if (root.nodeType == 3) {
+                return root;
+            }
+            console.log(root);
+            let x = Array.from(root.children);
+            x.forEach(ele => {
+                traverse(root.child)
+            })
+
+        }
+
+
+        // traverse(root);
+        console.log(root.firstChild)
+
+
+
+    </script>
+</body>
+
+</html>
