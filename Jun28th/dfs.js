@@ -1,28 +1,8 @@
-
-
-
 let textNodes = [];
 let body = document.querySelector("body");
-body.normalize()
-// console.log(body.childNodes);
-cleanNode(body); 
-getAllTextNodes(body);
-
-
-function cleanNode(node) {
-    var child;
-    for (var i = node.childNodes.length; i--;) {
-        child = node.childNodes[i];
-        // If commentt/textNode and has no non-whitespace character in it, delete it.
-        if (child.nodeType === 3 || child.nodeType === 8 && !/\S/.test(child.nodeValue)) {
-            node.removeChild(child);
-            n--;
-        }
-        else {
-            cleanNode(child);
-        }
-    }
-}
+const iconSrc = './info.svg';
+const iconAlt = 'Icon description';
+const targetWords = ['crazy', 'stupid', 'mad'];
 
 function getAllTextNodes(node) {
     if (node.nodeType === 3) {
@@ -35,27 +15,62 @@ function getAllTextNodes(node) {
         getAllTextNodes(children[i]);
     }
 }
+getAllTextNodes(body);
 
-console.log("textNodes  ", textNodes);
-
-const iconSrc = '../info.svg';
-const iconAlt = 'Icon description';
-const targetWords = ['crazy'];
-let ct = 0;
-// console.log(textNodes);
+console.log("textNodes  ", textNodes[3]);
 
 
-textNodes.forEach(text => {
-    const textNode = text.node;
-    const parentNode = text.parent;
-    // console.log(text)
+let text = textNodes[3];
+console.log(text)
+
+let text1 = textNodes[7];
+console.log("text1", text1)
+
+let newText = []
+newText.push(text);
+newText.push(text1);
+
+for (let i = 0; i < newText.length; i++) {
+    let text = newText[i];
+    let parentNode = text.parent;
+    let textNode = text.node;
+
     targetWords.forEach(targetWord => {
         if (parentNode.innerHTML.includes(targetWord)) {
             const className = `icon-container-${targetWord}`;
             const parts = parentNode.innerHTML.split(targetWord);
-            const replacedHTML = parts.join(`${targetWord}<span class="${className}">**</span>`);
-            // console.log(replacedHTML)
-            // parentNode.innerHTML = replacedHTML;
+            const replacedHTML = parts.join(`${targetWord}<span class="${className}"></span>`);
+            parentNode.innerHTML = replacedHTML
+
+            const iconContainers = parentNode.querySelectorAll(`.${className}`);
+            iconContainers.forEach(container => {
+                const icon = document.createElement('img');
+                icon.src = iconSrc;
+                icon.alt = iconAlt;
+                container.appendChild(icon);
+
+            });
         }
+
     })
-})
+}
+
+
+//This is causing problem, because a lot of empty textNodes are getting inside the textNodes array
+//and creating issues
+//However it works well with minified version of HTML
+// for (let i = 0; i < textNodes.length; i++) {
+//     let text = textNodes[i];
+//     let parentNode = text.parent;
+//     let textNode = text.node;
+
+//     targetWords.forEach(targetWord => {
+//         if (parentNode.innerHTML.includes(targetWord)) {
+//             const className = `icon-container-${targetWord}`;
+//             const parts = parentNode.innerHTML.split(targetWord);
+//             const replacedHTML = parts.join(`${targetWord}<span class="${className}">**</span>`);
+//             parentNode.innerHTML = replacedHTML
+//         }
+
+//     })
+// }
